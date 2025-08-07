@@ -66,4 +66,28 @@ public:
         delete tail;
         tail = ptr;
     }
+    Node* insert(int index, double data){
+        Node* ptr = head;
+        int n = 0;
+        while(n!=index){
+            if(ptr == NULL){
+                ptr = NULL;
+            }
+            ptr = ptr->next;
+            ++n;
+        }
+        if(ptr == NULL){
+            return push_back(data);
+        }
+        if(ptr->prev == NULL){
+            return push_front(data);
+        }
+        Node* ptr1 = new Node(data);
+        ptr1->next = ptr;
+        ptr1->prev = ptr->prev;
+
+        ptr->prev->next = ptr1;
+        ptr->prev = ptr1;
+        return ptr1;
+    }
 };
