@@ -1,3 +1,5 @@
+#include <cstddef>
+#include <iostream>
 class Node {
 public:
          double data;
@@ -71,7 +73,7 @@ public:
         int n = 0;
         while(n!=index){
             if(ptr == NULL){
-                ptr = NULL;
+                break;
             }
             ptr = ptr->next;
             ++n;
@@ -90,4 +92,48 @@ public:
         ptr->prev = ptr1;
         return ptr1;
     }
+    void erase(int index){
+        Node* ptr = head;
+        int n = 0;
+        while(n!=index){
+            if(ptr == NULL){
+                break;
+            }
+            ptr = ptr->next;
+            ++n;
+        }
+        if(ptr == NULL){
+            return;
+        }
+        if (ptr->prev == NULL) {
+            pop_front();
+            return;
+        }
+         
+        if (ptr->next == NULL) {
+            pop_back();
+            return;
+        }
+        
+        Node* left = ptr->prev;
+        Node* right = ptr->next;
+        left->next = right;
+        right->prev = left;
+        delete ptr;
+    }
 };
+
+int main()
+{
+         LinkedList lst;
+         lst.push_back(1.0);
+         lst.push_back(2.0);
+         lst.push_back(3.0);
+         lst.push_back(4.0);
+         lst.erase(1);
+        for (Node* ptr = lst.head; ptr != NULL; ptr = ptr->next)
+                     std::cout << ptr->data << " ";
+           std::cout << std::endl;
+ 
+         return 0;
+}
